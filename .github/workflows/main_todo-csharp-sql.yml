@@ -23,11 +23,11 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Development
+        run: dotnet build --configuration Debug
         working-directory: ./src/api
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ./src/api/myapp
+        run: dotnet publish -c Debug -o ./src/api/myapp
         working-directory: ./src/api
 
       - name: Upload artifact for deployment job
