@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ./src/api/myapp
+          path: ./src/api/
 
   deploy:
     runs-on: ubuntu-latest
