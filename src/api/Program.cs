@@ -9,7 +9,7 @@ builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_
 builder.Services.AddScoped<ListsRepository>();
 builder.Services.AddDbContext<TodoDb>(options =>
 {
-    var connectionString = builder.Configuration["AZURE-SQL-CONNECTION-STRING-KEY"];
+    var connectionString = builder.Configuration["AZURE_SQL_CONNECTION_STRING_KEY"];
     options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
 });
 
