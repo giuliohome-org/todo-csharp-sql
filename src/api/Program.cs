@@ -10,7 +10,7 @@ builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_
 builder.Services.AddScoped<ListsRepository>();
 builder.Services.AddDbContext<TodoDb>(options =>
 {
-    var secretName = "AZURE-SQL-CONNECTION-STRING_KEY";
+    var secretName = "AZURE-SQL-CONNECTION-STRING-KEY";
     var client = new SecretClient(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"]), new DefaultAzureCredential());
     var secret = client.GetSecret(secretName);
 
