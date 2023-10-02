@@ -1,4 +1,5 @@
 using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 using SimpleTodo.Api;
 
@@ -9,7 +10,11 @@ builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_
 builder.Services.AddScoped<ListsRepository>();
 builder.Services.AddDbContext<TodoDb>(options =>
 {
-    var connectionString = builder.Configuration["AZURE_SQL_CONNECTION_STRING_KEY"];
+    var secretName = "AZURE-SQL-CONNECTION-STRING_KEY";
+    var client = new SecretClient(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"]), new DefaultAzureCredential());
+    var secret = client.GetSecret(secretName);
+
+    var connectionString = secret.Value.Value;
     options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
 });
 
