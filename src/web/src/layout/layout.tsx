@@ -1,6 +1,5 @@
-import React, { FC, ReactElement, useContext, useEffect, useMemo, useState } from 'react';
-import SplitPane, { Pane, SashContent } from 'split-pane-react';
-import 'split-pane-react/esm/themes/default.css';
+import React, { FC, ReactElement, useContext, useEffect, useMemo } from 'react';
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import Header from './header';
 import Sidebar from './sidebar';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -17,14 +16,7 @@ import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles
 import TodoItemDetailPane from '../components/todoItemDetailPane';
 import { bindActionCreators } from '../actions/actionCreators';
 
-const Layout: FC = (): ReactElement => {  
-    const [sizes, setSizes] = useState([ 300, 'auto', '30%']);
-    const layoutCSS = {
-        height: '100%',
-        display: 'flex',
-        alignItems: 'strech',
-        justifyContent: 'top'
-    };
+const Layout: FC = (): ReactElement => { 
     const navigate = useNavigate();
     const appContext = useContext<AppContext>(TodoContext)
     const actions = useMemo(() => ({
@@ -63,24 +55,18 @@ const Layout: FC = (): ReactElement => {
             <Stack.Item styles={headerStackStyles}>
                 <Header></Header>
             </Stack.Item>
-            <SplitPane
-                split='vertical'
-                sizes={sizes}
-                onChange={setSizes}
-                sashRender={(_, active) => (
-                    <SashContent active={active} type="vscode" />
-                    )}
-            >
-                <Pane >
-                    <Stack styles={sidebarStackStyles} style={{ ...layoutCSS}}>
+            <PanelGroup autoSaveId="mypaneltodo" direction="horizontal">
+                <Panel>
+                    <Stack styles={sidebarStackStyles} >
                     <Sidebar
                         selectedList={appContext.state.selectedList}
                         lists={appContext.state.lists}
                         onListCreate={onListCreated} />
                     </Stack>
-                </Pane>
-                <Pane>
-                    <Stack styles={mainStackStyles} style={{ ...layoutCSS}}>
+                </Panel>
+                <PanelResizeHandle style={{width: '10px', background: 'white'}}/>
+                <Panel>
+                    <Stack styles={mainStackStyles} >
                     <Routes>
                         <Route path="/lists/:listId/items/:itemId" element={<HomePage />} />
                         <Route path="/lists/:listId" element={<HomePage />} />
@@ -88,16 +74,17 @@ const Layout: FC = (): ReactElement => {
                         <Route path="/" element={<HomePage />} />
                     </Routes>
                     </Stack>
-                </Pane>
-                <Pane>
-                    <Stack styles={sidebarStackStyles} style={{ ...layoutCSS}}>
+                </Panel>
+                <PanelResizeHandle style={{width: '10px', background: 'white'}} />
+                <Panel>
+                    <Stack styles={sidebarStackStyles} >
                     <TodoItemDetailPane
                         item={appContext.state.selectedItem}
                         onEdit={onItemEdited}
                         onCancel={onItemEditCancel} />
                     </Stack>
-                </Pane>
-            </SplitPane>
+                </Panel>
+            </PanelGroup>
             </Stack>
         </div>
     );
