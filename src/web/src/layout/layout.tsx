@@ -56,7 +56,7 @@ const Layout: FC = (): ReactElement => {
                 <Header></Header>
             </Stack.Item>
             <PanelGroup autoSaveId="mypaneltodo" direction="horizontal">
-                <Panel>
+                <Panel style={{overflowY:'auto'}}>
                     <Stack styles={sidebarStackStyles} >
                     <Sidebar
                         selectedList={appContext.state.selectedList}
@@ -65,7 +65,7 @@ const Layout: FC = (): ReactElement => {
                     </Stack>
                 </Panel>
                 <PanelResizeHandle style={{width: '10px', background: 'white'}}/>
-                <Panel>
+                <Panel style={{overflowY:'auto'}}>
                     <Stack styles={mainStackStyles} >
                     <Routes>
                         <Route path="/lists/:listId/items/:itemId" element={<HomePage />} />
@@ -76,7 +76,7 @@ const Layout: FC = (): ReactElement => {
                     </Stack>
                 </Panel>
                 <PanelResizeHandle style={{width: '10px', background: 'white'}} />
-                <Panel>
+                <Panel style={{overflowY:'auto'}}>
                     <Stack styles={sidebarStackStyles} >
                     <TodoItemDetailPane
                         item={appContext.state.selectedItem}
