@@ -221,7 +221,6 @@ const TodoItemListPane: FC<TodoItemListPaneProps> = (props: TodoItemListPaneProp
             </Stack.Item>
             {items.length > 0 &&
                 <Stack.Item>
-                    <MarqueeSelection selection={selection}>
                         <DetailsList
                             items={items}
                             groups={groups}
@@ -237,7 +236,6 @@ const TodoItemListPane: FC<TodoItemListPaneProps> = (props: TodoItemListPaneProp
                             checkButtonAriaLabel="select row"
                             checkboxVisibility={CheckboxVisibility.always}
                             onActiveItemChanged={selectItem} />
-                    </MarqueeSelection>
                 </Stack.Item>
             }
             {!props.items &&
