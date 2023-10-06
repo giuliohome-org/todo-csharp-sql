@@ -1,4 +1,6 @@
-import React, { FC, ReactElement, useContext, useEffect, useMemo } from 'react';
+import React, { FC, ReactElement, useContext, useEffect, useMemo, useState } from 'react';
+import SplitPane, { Pane, SashContent } from 'split-pane-react';
+import 'split-pane-react/esm/themes/default.css';
 import Header from './header';
 import Sidebar from './sidebar';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -15,7 +17,14 @@ import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles
 import TodoItemDetailPane from '../components/todoItemDetailPane';
 import { bindActionCreators } from '../actions/actionCreators';
 
-const Layout: FC = (): ReactElement => {
+const Layout: FC = (): ReactElement => {  
+    const [sizes, setSizes] = useState([ 300, 'auto', '30%']);
+    const layoutCSS = {
+        height: '100%',
+        display: 'flex',
+        alignItems: 'strech',
+        justifyContent: 'top'
+    };
     const navigate = useNavigate();
     const appContext = useContext<AppContext>(TodoContext)
     const actions = useMemo(() => ({
@@ -49,33 +58,48 @@ const Layout: FC = (): ReactElement => {
     }
 
     return (
-        <Stack styles={rootStackStyles}>
+        <div style={{ height: 800 }}>
+            <Stack styles={rootStackStyles}>
             <Stack.Item styles={headerStackStyles}>
                 <Header></Header>
             </Stack.Item>
-            <Stack horizontal grow={1}>
-                <Stack.Item styles={sidebarStackStyles}>
+            <SplitPane
+                split='vertical'
+                sizes={sizes}
+                onChange={setSizes}
+                sashRender={(_, active) => (
+                    <SashContent active={active} type="vscode" />
+                    )}
+            >
+                <Pane >
+                    <Stack styles={sidebarStackStyles} style={{ ...layoutCSS}}>
                     <Sidebar
                         selectedList={appContext.state.selectedList}
                         lists={appContext.state.lists}
                         onListCreate={onListCreated} />
-                </Stack.Item>
-                <Stack.Item grow={1} styles={mainStackStyles}>
+                    </Stack>
+                </Pane>
+                <Pane>
+                    <Stack styles={mainStackStyles} style={{ ...layoutCSS}}>
                     <Routes>
                         <Route path="/lists/:listId/items/:itemId" element={<HomePage />} />
                         <Route path="/lists/:listId" element={<HomePage />} />
                         <Route path="/lists" element={<HomePage />} />
                         <Route path="/" element={<HomePage />} />
                     </Routes>
-                </Stack.Item>
-                <Stack.Item styles={sidebarStackStyles}>
+                    </Stack>
+                </Pane>
+                <Pane>
+                    <Stack styles={sidebarStackStyles} style={{ ...layoutCSS}}>
                     <TodoItemDetailPane
                         item={appContext.state.selectedItem}
                         onEdit={onItemEdited}
                         onCancel={onItemEditCancel} />
-                </Stack.Item>
+                    </Stack>
+                </Pane>
+            </SplitPane>
             </Stack>
-        </Stack>
+        </div>
     );
 }
 
