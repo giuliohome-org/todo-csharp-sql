@@ -50,7 +50,7 @@ const Layout: FC = (): ReactElement => {
     }
 
     return (
-        <div style={{ height: 800 }}>
+        <div>
             <Stack styles={rootStackStyles}>
             <Stack.Item styles={headerStackStyles}>
                 <Header></Header>
