@@ -36,7 +36,7 @@ export abstract class RestService<T extends Entity> {
 
     public async get(id: string): Promise<T> {
         const response = await this.client.request<T>({
-            method: 'GET',
+            method: 'POST',
             url: id
         });
 
