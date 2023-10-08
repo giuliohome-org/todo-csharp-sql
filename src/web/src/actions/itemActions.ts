@@ -16,7 +16,8 @@ export interface ItemActions {
 
 export const list = (listId: string, options?: QueryOptions): ActionMethod<TodoItem[]> => async (dispatch: Dispatch<ListItemsAction>) => {
     const itemService = new ItemService(config.api.baseUrl, `/lists/${listId}/items`);
-    const items = await itemService.getList(options);
+    const token = localStorage.getItem('auth0Token')??"";
+    const items = await itemService.getList(token, options);
 
     dispatch(listItemsAction(items));
 
