@@ -27,6 +27,8 @@ export abstract class RestService<T extends Entity> {
             data: queryOptions,
             headers: {
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json'
               }
 
         });
