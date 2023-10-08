@@ -7,8 +7,11 @@ using System.Linq;
 using System.Security.Claims;
 using Auth0.AspNetCore.Authentication;
 
-    public class AccountController : Controller
+    [ApiController]
+    [Route("/Account")]
+    public class AccountController : ControllerBase
     {
+        [HttpPost("Login")]
         public async Task Login(string returnUrl = "/")
         {
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
@@ -24,7 +27,7 @@ using Auth0.AspNetCore.Authentication;
             var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
                 // Indicate here where Auth0 should redirect the user after a logout.
                 // Note that the resulting absolute Uri must be whitelisted in 
-                .WithRedirectUri(Url.Action("Index", "Home"))
+                .WithRedirectUri("/")
                 .Build();
 
             await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
