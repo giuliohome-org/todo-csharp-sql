@@ -14,7 +14,7 @@ public class ListsController : ControllerBase
         _repository = repository;
     }
 
-    [HttpPost("protected")]
+    [HttpGet("protected")]
     [Authorize("read:lists")]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
