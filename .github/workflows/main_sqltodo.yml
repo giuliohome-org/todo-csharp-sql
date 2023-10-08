@@ -21,13 +21,6 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: create env file
-        run: |
-          touch .env
-          echo REACT_APP_AUTH0_CLIENT_ID=${{ env.REACT_APP_AUTH0_CLIENT_ID }} >> .env
-          echo REACT_APP_AUTH0_DOMAIN=${{ env.REACT_APP_AUTH0_DOMAIN }} >> .env
-          cat .env
-
       - name: npm install, build, and test
         working-directory: ./src/web
         env:
