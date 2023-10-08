@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
 export interface QueryOptions {
     top?: number;
@@ -21,9 +22,19 @@ export abstract class RestService<T extends Entity> {
     }
 
     public async getList(queryOptions?: QueryOptions): Promise<T[]> {
+        const {
+            getAccessTokenSilently,
+            loginWithPopup,
+            getAccessTokenWithPopup,
+          } = useAuth0();
+        const token = await getAccessTokenSilently();
         const response = await this.client.request<T[]>({
             method: 'GET',
-            data: queryOptions
+            data: queryOptions,
+            headers: {
+                Authorization: `Bearer ${token}`,
+              }
+
         });
 
         return response.data;
