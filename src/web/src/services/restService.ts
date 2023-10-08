@@ -20,8 +20,7 @@ export abstract class RestService<T extends Entity> {
         });
     }
 
-    public async getList(queryOptions?: QueryOptions): Promise<T[]> {
-        const token = localStorage.getItem('auth0Token');
+    public async getList(token: string, queryOptions?: QueryOptions): Promise<T[]> {
         console.log(`token from storage ${token}`);
         const response = await this.client.request<T[]>({
             method: 'GET',
