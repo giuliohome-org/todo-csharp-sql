@@ -1,4 +1,5 @@
 ﻿using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleTodo.Api;
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<TodoDb>(options =>
 builder.Services.AddControllers();
 // configure and then enable app insights 
 // builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
+
+builder.Services.AddAuthentication().AddCookie(options => options.LoginPath = "/lists/login"); 
 
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
