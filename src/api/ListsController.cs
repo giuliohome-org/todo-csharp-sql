@@ -12,7 +12,7 @@ namespace SimpleTodo.Api;
 public class ListsController : ControllerBase
 {
     [AllowAnonymous]
-    [HttpGet]
+    [HttpGet("login")]
     public async Task Login(string returnUrl = "/")
     {
         var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
@@ -28,7 +28,7 @@ public class ListsController : ControllerBase
         );
     }
 
-    [HttpGet]   
+    [HttpGet("logout")]   
     public async Task Logout()
     {
         var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
