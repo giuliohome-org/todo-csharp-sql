@@ -1,6 +1,11 @@
-﻿using Auth0.AspNetCore.Authentication;
+﻿using App.Authorization;
+using App.Requirement;
 using Microsoft.AspNetCore.Authentication;
 using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using SimpleTodo.Api;
 
@@ -19,11 +24,29 @@ builder.Services.AddControllers();
 // configure and then enable app insights 
 // builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
 
-builder.Services.AddAuth0WebAppAuthentication(options =>
-{
-    options.Domain = builder.Configuration["AUTH0_DOMAIN"];
-    options.ClientId = builder.Configuration["AUTH0_CLIENT_ID"];
-});
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            var audience =
+                  builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
+
+            options.Authority =
+                  $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
+            options.Audience = audience;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true
+            };
+        });
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("read:lists", policy =>
+        {
+            policy.Requirements.Add(new RbacRequirement("read:lists"));
+        });
+    });
+
 
 var app = builder.Build();
 

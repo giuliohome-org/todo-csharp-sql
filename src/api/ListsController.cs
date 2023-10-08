@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Auth0.AspNetCore.Authentication;
 
 namespace SimpleTodo.Api;
 
 [ApiController]
 [Route("/lists")]
-[Authorize]
 public class ListsController : ControllerBase
 {
     private readonly ListsRepository _repository;
@@ -18,7 +14,8 @@ public class ListsController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet]
+    [HttpGet("protected")]
+    [Authorize("read:lists")]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
