@@ -1,3 +1,4 @@
+﻿using Auth0.AspNetCore.Authentication;
 using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleTodo.Api;
@@ -14,9 +15,19 @@ builder.Services.AddDbContext<TodoDb>(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
+// configure and then enable app insights 
+// builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
+
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["AUTH0_DOMAIN"];
+    options.ClientId = builder.Configuration["AUTH0_CLIENT_ID"];
+});
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 await using (var scope = app.Services.CreateAsyncScope())
 {
