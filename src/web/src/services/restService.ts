@@ -23,7 +23,7 @@ export abstract class RestService<T extends Entity> {
     public async getList(token: string, queryOptions?: QueryOptions): Promise<T[]> {
         console.log(`token from storage ${token}`);
         const response = await this.client.request<T[]>({
-            method: 'GET',
+            method: 'POST',
             data: queryOptions,
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ export abstract class RestService<T extends Entity> {
 
     public async get(id: string): Promise<T> {
         const response = await this.client.request<T>({
-            method: 'POST',
+            method: 'GET',
             url: id
         });
 
