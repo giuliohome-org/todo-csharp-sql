@@ -4,6 +4,10 @@ This is a [Create React App](https://github.com/facebook/create-react-app) based
 
 ## Setup
 
+Use Github Actions Environment Variables instead!
+
+
+
 Create a `.env` file within the base of the `reactd-fluent` folder with the following configuration:
 
 - `REACT_APP_API_BASE_URL` - Base URL for all api requests, (ex: `http://localhost:3100`)
