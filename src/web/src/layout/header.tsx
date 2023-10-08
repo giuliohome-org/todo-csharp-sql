@@ -1,5 +1,6 @@
 import { FontIcon, getTheme, IconButton, IIconProps, IStackStyles, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
 import React, { FC, ReactElement } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const theme = getTheme();
 
@@ -35,6 +36,7 @@ const iconProps: IIconProps = {
 }
 
 const Header: FC = (): ReactElement => {
+    const { loginWithRedirect } = useAuth0();
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
@@ -48,6 +50,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
+                    <button onClick={() => loginWithRedirect()}>Log In</button>
                     <Persona size={PersonaSize.size24} text="Sample User" />
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
                 </Stack>
