@@ -47,7 +47,7 @@ const Layout: FC = (): ReactElement => {
         if (!appContext.state.lists) {        
             actions.lists.list(mytoken);
         }
-    }, [actions.lists, appContext.state.lists, getAccessTokenSilently]);
+    }, [actions.lists, appContext.state.lists, getAccessTokenSilently, mytoken]);
 
     const onListCreated = async (list: TodoList) => {
         const newList = await actions.lists.save(list);
