@@ -45,7 +45,7 @@ const HomePage = () => {
         if (appContext.state.lists?.length === 0) {
             actions.lists.save({ name: 'My List' });
         }
-    }, [actions.lists, appContext.state.lists?.length])
+    }, [actions.lists, appContext.state.lists?.length, getAccessTokenSilently])
 
     // Select default list on initial load
     useEffect(() => {
