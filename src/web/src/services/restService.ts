@@ -24,7 +24,7 @@ export abstract class RestService<T extends Entity> {
         console.log(`token from storage ${token}`);
         const response = await this.client.request<T[]>({
             method: 'POST',
-            data: queryOptions,
+            data: JSON.stringify(queryOptions),
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
