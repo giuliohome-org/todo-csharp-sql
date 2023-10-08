@@ -11,7 +11,7 @@ using Auth0.AspNetCore.Authentication;
     [Route("/Account")]
     public class AccountController : ControllerBase
     {
-        [HttpPost("Login")]
+        [HttpGet("Login")]
         public async Task Login(string returnUrl = "/")
         {
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
