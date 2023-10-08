@@ -12,11 +12,15 @@ import { stackItemPadding, stackPadding, titleStackStyles } from '../ux/styles';
 import { useNavigate, useParams } from 'react-router-dom';
 import { bindActionCreators } from '../actions/actionCreators';
 import { withApplicationInsights } from '../components/telemetry';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const appContext = useContext<AppContext>(TodoContext)
     const { listId, itemId } = useParams();
+    const {
+        getAccessTokenSilently,
+      } = useAuth0();
     const actions = useMemo(() => ({
         lists: bindActionCreators(listActions, appContext.dispatch) as unknown as ListActions,
         items: bindActionCreators(itemActions, appContext.dispatch) as unknown as ItemActions,
@@ -25,7 +29,19 @@ const HomePage = () => {
     const [isReady, setIsReady] = useState(false)
 
     // Create default list of does not exist
-    useEffect(() => {
+    useEffect(  () => {
+        // declare the data fetching function
+        const fetchToken = async () => {
+            const token = await getAccessTokenSilently();
+            console.log(`my auth0 token ${token}`);
+            localStorage.setItem('auth0Token', token)
+        }
+
+        // call the function
+        fetchToken()
+            // make sure to catch any error
+            .catch(console.error);
+        
         if (appContext.state.lists?.length === 0) {
             actions.lists.save({ name: 'My List' });
         }
