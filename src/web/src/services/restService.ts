@@ -28,8 +28,8 @@ export abstract class RestService<T extends Entity> {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
-              }
-
+              },
+            withCredentials: true
         });
 
         return response.data;
