@@ -19,10 +19,11 @@ public class ListsController : ControllerBase
     // [HttpGet("private-scoped")]
     // [Authorize("read:lists")]
     [HttpGet]
+    [Authorize]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
-        TodoList fakeList = new TodoList("Auth0 Works");
+        TodoList[] fakeList = new TodoList[1] { new TodoList("Auth0 Works") };
         fakeList.Description = "Thanks to ChatGPT";
         await System.Threading.Tasks.Task.Delay(200);
         return Ok(fakeList); // Ok(await _repository.GetListsAsync(skip, batchSize));
