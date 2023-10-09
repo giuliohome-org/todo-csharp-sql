@@ -27,8 +27,8 @@ export abstract class RestService<T extends Entity> {
             data: queryOptions,
             headers: {
                 Authorization: `Bearer ${token}`,
-              },
-            withCredentials: true
+              } // ,
+            // withCredentials: true
         });
         console.log("GET response status:", response.statusText);
         return response.data;
