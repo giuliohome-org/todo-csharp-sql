@@ -20,16 +20,11 @@ export abstract class RestService<T extends Entity> {
         });
     }
 
-    public async getList(token: string, queryOptions?: QueryOptions): Promise<T[]> {
-        const Bearer = `Bearer ${token}`
-        console.log(`Bearer from storage ${Bearer}`);
+    public async getList(queryOptions?: QueryOptions): Promise<T[]> {
         const response = await this.client.request<T[]>({
             method: 'GET',
-            data: JSON.stringify(queryOptions),
-            headers: {
-                Authorization: Bearer,
-                'Content-Type': 'application/json'
-              }
+            data: queryOptions,
+            withCredentials: true
         });
         console.log("GET response status:", response.statusText);
         return response.data;

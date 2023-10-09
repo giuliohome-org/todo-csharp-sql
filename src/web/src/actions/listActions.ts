@@ -10,15 +10,15 @@ import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreato
 const listService = new ListService(config.api.baseUrl, '/lists');
 
 export interface ListActions {
-    list(token: string, options?: QueryOptions): Promise<TodoList[]>
+    list(options?: QueryOptions): Promise<TodoList[]>
     load(id: string): Promise<TodoList>
     select(list: TodoList): Promise<TodoList>
     save(list: TodoList): Promise<TodoList>
     remove(id: string): Promise<void>
 }
 
-export const list = (token: string, options?: QueryOptions): ActionMethod<TodoList[]> => async (dispatch: Dispatch<ListListsAction>) => {
-    const lists = await listService.getList(token, options);
+export const list = (options?: QueryOptions): ActionMethod<TodoList[]> => async (dispatch: Dispatch<ListListsAction>) => {
+    const lists = await listService.getList(options);
 
     dispatch(listListsAction(lists));
 
