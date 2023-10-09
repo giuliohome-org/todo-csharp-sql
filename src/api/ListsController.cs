@@ -21,7 +21,10 @@ public class ListsController : ControllerBase
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
-        return Ok(await _repository.GetListsAsync(skip, batchSize));
+        TodoList fakeList = new TodoList("Auth0 Works");
+        fakeList.Description = "Thanks to ChatGPT";
+        await System.Threading.Tasks.Task.Delay(200);
+        return Ok(fakeList); // Ok(await _repository.GetListsAsync(skip, batchSize));
     }
 
     // This is a helper action. It allows you to easily view all the claims of the token.
