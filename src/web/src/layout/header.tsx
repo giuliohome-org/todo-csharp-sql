@@ -36,7 +36,7 @@ const iconProps: IIconProps = {
 }
 
 const Header: FC = (): ReactElement => {
-    const { loginWithRedirect } = useAuth0();
+    const { loginWithRedirect, logout, user, isAuthenticated, isLoading } = useAuth0();
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
@@ -51,7 +51,26 @@ const Header: FC = (): ReactElement => {
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
                     <button onClick={() => loginWithRedirect()}>Log In</button>
-                    <Persona size={PersonaSize.size24} text="Sample User" />
+                    
+
+                    {isAuthenticated && user && (
+                    <div>
+                        <img src={user.picture} alt={user.name} />
+                        <h2>{user.name}</h2>
+                        <p>{user.email}</p>
+                        <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}> Log Out </button>
+                    </div>
+                    
+                    }
+
+                    {isLoading && <div>Loading...</div> }
+
+                    {!isLoading && !isAuthenticated && 
+                        <button onClick={() => 
+                            logout({ 
+                                logoutParams: { returnTo: window.location.origin } })}> Log Out </button>}
+
+                    {/* <Persona size={PersonaSize.size24} text="Sample User" /> */}
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
                 </Stack>
             </Stack.Item>
