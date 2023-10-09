@@ -59,12 +59,18 @@ await using (var scope = app.Services.CreateAsyncScope())
     await db.Database.EnsureCreatedAsync();
 }
 
-app.UseCors(policy =>
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
 {
-    policy.AllowAnyOrigin();
-    policy.AllowAnyHeader();
-    policy.AllowAnyMethod();
+    options.AddPolicy(MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("https://sqltodo.azurewebsites.net/")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
 });
+app.UseCors(MyAllowSpecificOrigins);
     
 // Swagger UI
 app.UseSwaggerUI(options => {
