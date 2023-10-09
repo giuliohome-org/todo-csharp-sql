@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
+[Route("/Account")]
 public class AccountController : ControllerBase
 {
+  [HttpGet("Login")]
   public async Task Login(string returnUrl = "/")
   {
     var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
