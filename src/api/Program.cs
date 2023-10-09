@@ -24,21 +24,11 @@ builder.Services.AddControllers();
 // configure and then enable app insights 
 // builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            var audience =
-                  builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
-
-            options.Authority =
-                  $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
-            options.Audience = audience;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true
-            };
-        });
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["REACT_APP_AUTH0_DOMAIN"];
+    options.ClientId = builder.Configuration["REACT_APP_AUTH0_CLIENT_ID"];
+});
 builder.Services.AddAuthorization();
 
 
