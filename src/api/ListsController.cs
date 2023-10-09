@@ -23,6 +23,7 @@ public class ListsController : ControllerBase
     {
         TodoList[] fakeList = new TodoList[1] { new TodoList("Auth0 Works") };
         fakeList[0].Description = "Thanks to ChatGPT";
+        fakeList[0].Id = new Guid();
         await System.Threading.Tasks.Task.Delay(200);
         return Ok(fakeList); // Ok(await _repository.GetListsAsync(skip, batchSize));
     }
