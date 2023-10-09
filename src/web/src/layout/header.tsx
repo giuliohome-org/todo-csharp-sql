@@ -64,10 +64,7 @@ const Header: FC = (): ReactElement => {
                     {isLoading && (<div>Loading...</div>) }
 
                     {!isLoading && !isAuthenticated && 
-                        (<button onClick={() => 
-                            logout({ 
-                                logoutParams: { returnTo: window.location.origin } })}> 
-                                Log Out </button>)}
+                        (<button onClick={() => loginWithRedirect()}>Log In</button>)}
 
                     {/* <Persona size={PersonaSize.size24} text="Sample User" /> */}
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
