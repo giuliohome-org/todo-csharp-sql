@@ -1,8 +1,7 @@
 ﻿using App.Authorization;
 using App.Requirement;
-using Microsoft.AspNetCore.Authentication;
+using Auth0.AspNetCore.Authentication;
 using Azure.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
