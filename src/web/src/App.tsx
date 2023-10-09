@@ -16,6 +16,7 @@ export const App: FC = () => {
   const initialContext: AppContext = { state: applicationState, dispatch: dispatch }
   const domain = process.env.REACT_APP_AUTH0_DOMAIN??"";
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID??"";
+  const api_audience = process.env.REACT_APP_AUTH0_AUDIENCE ?? "";
   
   initializeIcons();
 
@@ -24,7 +25,8 @@ export const App: FC = () => {
       domain={domain}
       clientId={clientId} 
       authorizationParams={{
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: api_audience
       }}
     >
     <ThemeProvider applyTo="body" theme={DarkTheme}>

@@ -30,6 +30,8 @@ jobs:
           npm install
           echo "check react env var"
           echo "$REACT_APP_AUTH0_DOMAIN"
+          echo "check api audience"
+          echo "$REACT_APP_AUTH0_DOMAIN"
           npm run build --if-present
 
       - name: Upload artifact for deployment job
