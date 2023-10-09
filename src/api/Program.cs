@@ -39,13 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 ValidateIssuerSigningKey = true
             };
         });
-builder.Services.AddAuthorization(options =>
-    {
-        options.AddPolicy("read:lists", policy =>
-        {
-            policy.Requirements.Add(new RbacRequirement("read:lists"));
-        });
-    });
+builder.Services.AddAuthorization();
 
 
 var app = builder.Build();
