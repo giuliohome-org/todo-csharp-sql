@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using SimpleTodo.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-// var credential = new DefaultAzureCredential();
-// builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"]), credential);
+var credential = new DefaultAzureCredential();
+builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"]), credential);
 
 builder.Services.AddScoped<ListsRepository>();
 builder.Services.AddDbContext<TodoDb>(options =>
