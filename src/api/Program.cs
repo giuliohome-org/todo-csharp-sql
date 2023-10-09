@@ -49,11 +49,11 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
-await using (var scope = app.Services.CreateAsyncScope())
+/* await using (var scope = app.Services.CreateAsyncScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TodoDb>();
     await db.Database.EnsureCreatedAsync();
-}
+} */
 
 app.UseCors(policy =>
                 policy.AllowAnyOrigin()
