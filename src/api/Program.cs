@@ -44,7 +44,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("read:lists", policy => policy.Requirements.Add(new HasScopeRequirement("read:lists", domain)));
+    options.AddPolicy("read:lists", policy => policy.RequireClaim("permissions", "read:lists"));
 });
 
 
