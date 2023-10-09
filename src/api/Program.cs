@@ -1,6 +1,6 @@
-﻿using App.Authorization;
-using App.Requirement;
-using Auth0.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using WebAPIApplication;
+// using Auth0.AspNetCore.Authentication;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -23,12 +23,25 @@ builder.Services.AddControllers();
 // configure and then enable app insights 
 // builder.Services.AddApplicationInsightsTelemetry(builder.Configuration);
 
-builder.Services.AddAuth0WebAppAuthentication(options =>
+/*builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["AUTH0_DOMAIN"];
     options.ClientId = builder.Configuration["AUTH0_CLIENT_ID"];
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();*/
+
+var domain = $"https://{builder.Configuration["AUTH0_DOMAIN"]}/";
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.Authority = domain;
+    options.Audience = builder.Configuration["AUTH0_AUDIENCE"];
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("read:lists", policy => policy.Requirements.Add(new HasScopeRequirement("read:lists", domain)));
+});
 
 
 var app = builder.Build();
