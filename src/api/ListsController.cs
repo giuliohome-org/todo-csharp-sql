@@ -14,12 +14,25 @@ public class ListsController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("private-scoped")]
-    [Authorize("read:lists")]
+    // [HttpGet("private-scoped")]
+    // [Authorize("read:lists")]
+    [HttpGet("private")]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
         return Ok(await _repository.GetListsAsync(skip, batchSize));
+    }
+
+    // This is a helper action. It allows you to easily view all the claims of the token.
+    [HttpGet("claims")]
+    public IActionResult Claims()
+    {
+        return Ok(User.Claims.Select(c =>
+            new
+            {
+                c.Type,
+                c.Value
+            }));
     }
 
     [HttpPost]
