@@ -27,17 +27,20 @@ export abstract class RestService<T extends Entity> {
             data: queryOptions,
             headers: {
                 Authorization: `Bearer ${token}`,
-              } // ,
-            // withCredentials: true
+              }
         });
         console.log("GET response status:", response.statusText);
         return response.data;
     }
 
     public async get(id: string): Promise<T> {
+        const token = localStorage.getItem('auth0Token');
         const response = await this.client.request<T>({
             method: 'GET',
-            url: id
+            url: id,
+            headers: {
+                Authorization: `Bearer ${token}`,
+              }
         });
 
         return response.data
