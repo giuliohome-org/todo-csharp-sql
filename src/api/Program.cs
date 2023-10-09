@@ -13,11 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"]), credential);
 
 builder.Services.AddScoped<ListsRepository>();
-/* builder.Services.AddDbContext<TodoDb>(options =>
+builder.Services.AddDbContext<TodoDb>(options =>
 {
     var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CONNECTION_STRING_KEY"]];
     options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-}); */
+}); 
 
 builder.Services.AddControllers();
 // configure and then enable app insights 
