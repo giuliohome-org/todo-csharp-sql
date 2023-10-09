@@ -22,7 +22,7 @@ export abstract class RestService<T extends Entity> {
 
     public async getList(token: string, queryOptions?: QueryOptions): Promise<T[]> {
         const Bearer = `Bearer ${token}`
-        console.log(`Bearer from storage ${token}`);
+        console.log(`Bearer from storage ${Bearer}`);
         const response = await this.client.request<T[]>({
             method: 'GET',
             data: JSON.stringify(queryOptions),
