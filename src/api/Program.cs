@@ -60,9 +60,9 @@ await using (var scope = app.Services.CreateAsyncScope())
 }
 
 app.UseCors(policy =>
-                policy.WithOrigins("https://sqltodo.azurewebsites.net")
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod()
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
             );
     
 // Swagger UI
