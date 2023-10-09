@@ -16,10 +16,8 @@ public class ListsController : ControllerBase
 
     // [HttpGet("public")]
     
-    // [HttpGet("private-scoped")]
-    // [Authorize("read:lists")]
     [HttpGet]
-    [Authorize]
+    [Authorize("read:lists")]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
