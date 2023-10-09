@@ -15,7 +15,7 @@ public class ListsController : ControllerBase
     }
 
     [HttpGet("protected")]
-    [Authorize("read:lists")]
+    [Authorize]
     [ProducesResponseType(200)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetLists([FromQuery] int? skip = null, [FromQuery] int? batchSize = null)
     {
