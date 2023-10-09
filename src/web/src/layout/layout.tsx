@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext, useEffect, useMemo } from 'react';
+import React, { FC, ReactElement, useContext, useEffect, useMemo, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import Header from './header';
 import Sidebar from './sidebar';
@@ -15,6 +15,7 @@ import { TodoItem, TodoList } from '../models';
 import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles } from '../ux/styles';
 import TodoItemDetailPane from '../components/todoItemDetailPane';
 import { bindActionCreators } from '../actions/actionCreators';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Layout: FC = (): ReactElement => { 
     const navigate = useNavigate();
@@ -25,12 +26,28 @@ const Layout: FC = (): ReactElement => {
     }), [appContext.dispatch]);
 
     // Load initial lists
+    const {
+        getAccessTokenSilently,
+      } = useAuth0();
+    const [mytoken, setmytoken] = useState("");
     useEffect(() => {
+        // declare the data fetching function
+        const fetchToken = async () => {
+            const token = await getAccessTokenSilently();
+            console.log(`my auth0 token ${token}`);
+            localStorage.setItem('auth0Token', token);
+            setmytoken(token);
+        }
+
+        // call the function
+        fetchToken()
+            // make sure to catch any error
+            .catch(console.error);
         
         if (!appContext.state.lists) {        
             actions.lists.list();
         }
-    }, [actions.lists, appContext.state.lists]);
+    }, [actions.lists, appContext.state.lists, getAccessTokenSilently, mytoken]);
 
     const onListCreated = async (list: TodoList) => {
         const newList = await actions.lists.save(list);

@@ -21,9 +21,13 @@ export abstract class RestService<T extends Entity> {
     }
 
     public async getList(queryOptions?: QueryOptions): Promise<T[]> {
+        const token = localStorage.getItem('auth0Token');
         const response = await this.client.request<T[]>({
             method: 'GET',
             data: queryOptions,
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
             withCredentials: true
         });
         console.log("GET response status:", response.statusText);

@@ -8,7 +8,6 @@ import appReducer from './reducers';
 import { TodoContext } from './components/todoContext';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { ThemeProvider } from '@fluentui/react';
-import Telemetry from './components/telemetry';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 export const App: FC = () => {
@@ -31,9 +30,7 @@ export const App: FC = () => {
     <ThemeProvider applyTo="body" theme={DarkTheme}>
       <TodoContext.Provider value={initialContext}>
         <BrowserRouter>
-          <Telemetry>
             <Layout />
-          </Telemetry>
         </BrowserRouter>
       </TodoContext.Provider>
     </ThemeProvider>
