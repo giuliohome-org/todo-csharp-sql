@@ -59,7 +59,7 @@ public class ListsController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<TodoList>>> GetList(Guid list_id)
     {
-        TodoItem[] fakeItem = new TodoItem[1] { new TodoItem("Private-Scoped") };
+        TodoItem[] fakeItem = new TodoItem[1] { new TodoItem(list_id, "Private-Scoped") };
         fakeItem[0].Description = "Auth0 works! ;-)";
         await System.Threading.Tasks.Task.Delay(200);
         return Ok(fakeItem); 
