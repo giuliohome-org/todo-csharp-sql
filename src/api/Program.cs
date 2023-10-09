@@ -25,8 +25,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
-    options.Domain = builder.Configuration["REACT_APP_AUTH0_DOMAIN"];
-    options.ClientId = builder.Configuration["REACT_APP_AUTH0_CLIENT_ID"];
+    options.Domain = builder.Configuration["AUTH0_DOMAIN"];
+    options.ClientId = builder.Configuration["AUTH0_CLIENT_ID"];
 });
 builder.Services.AddAuthorization();
 
