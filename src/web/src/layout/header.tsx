@@ -50,16 +50,14 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <button onClick={() => loginWithRedirect()}>Log In</button>
                     
-
                     {isAuthenticated && user && (
-                    <div>
+                    <Stack horizontal>
                         <img src={user.picture} alt={user.name} />
                         <h2>{user.name}</h2>
                         <p>{user.email}</p>
                         <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}> Log Out </button>
-                    </div>)
+                    </Stack>)
                     
                     }
 
